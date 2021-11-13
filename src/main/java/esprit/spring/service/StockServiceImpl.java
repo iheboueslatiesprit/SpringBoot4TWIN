@@ -47,4 +47,11 @@ public class StockServiceImpl implements StockService{
         return stockRepo.existsById(id);
     }
 
+    @Override
+    public List<Stock> warnStock(){
+        return stockRepo.warnStock();
+    }
+
+
+
 }

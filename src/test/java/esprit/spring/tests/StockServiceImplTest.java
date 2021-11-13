@@ -1,4 +1,4 @@
-package esprit.tn.springbootdatajpaentity;
+package esprit.spring.tests;
 import esprit.spring.entities.Stock;
 import esprit.spring.service.StockService;
 import org.junit.Test;

@@ -1,15 +1,9 @@
 package esprit.spring.service;
 
 
-import esprit.spring.entities.DetailProduit;
-import esprit.spring.entities.Produit;
-import esprit.spring.entities.Rayon;
-import esprit.spring.entities.Stock;
-import esprit.spring.repository.RayonRepository;
-import esprit.spring.repository.StockRepository;
+import esprit.spring.entities.*;
+import esprit.spring.repository.*;
 
-import esprit.spring.repository.DetailProduitRepository;
-import esprit.spring.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +20,8 @@ public class ProduitServiceImpl implements ProduitService{
     StockRepository stockRepo;
     @Autowired
     DetailProduitRepository detailProduitRepo;
-
+    @Autowired
+    FournisseurRepository fournisseurRepo;
 
     @Override
     public List<Produit> retrieveAllProduits() {
@@ -37,17 +32,33 @@ public class ProduitServiceImpl implements ProduitService{
     public Produit addProduit(Produit p, Long idRayon, Long idStock) {
         Rayon r = rayonRepo.getById(idRayon);
         Stock s = stockRepo.getById(idStock);
-
         Produit produit = p ;
         produit.setRayon(r);
         produit.setStock(s);
        // produit.setFournisseur AJOUT STATIQUE EN TEST
-
         DetailProduit dp = p.getDetailProduit();
         detailProduitRepo.save(dp);
         return produitRepo.save(produit);
 
     }
+
+    @Override
+    public  void assignProduitToStock(Long idProduit, Long idStock) {
+        Produit p = new Produit();
+        p = produitRepo.getById(idProduit);
+        Stock s = new Stock();
+        s = stockRepo.getById(idStock);
+        p.setStock(s);
+       produitRepo.saveAndFlush(p);
+    }
+    @Override
+    public void assignFournisseurToProduit(Long fournisseurId, Long produitId) {
+    Fournisseur f = fournisseurRepo.getById(fournisseurId);
+    Produit p = produitRepo.getById(produitId);
+    p.getFournisseur().add(f);
+    produitRepo.saveAndFlush(p);
+    }
+
 
     @Override
     public Produit retrieveProduit(Long id) {

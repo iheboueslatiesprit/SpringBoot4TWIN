@@ -26,7 +26,7 @@ public class Stock implements Serializable {
     private String libelleStock;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL , mappedBy = "stock")
+    @OneToMany( cascade =  CascadeType.ALL , mappedBy = "stock")
     private Set<Produit> produits;
 
 }
