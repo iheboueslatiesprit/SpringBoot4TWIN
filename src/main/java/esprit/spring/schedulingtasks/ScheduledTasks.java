@@ -36,7 +36,8 @@ public class ScheduledTasks {
     }
 
 
-    @Scheduled(fixedRate = 60000)
+    //@Scheduled(fixedRate = 60000)
+    @Scheduled(cron = "0 0 0 1 1 *")
     public void chiffreAffaire(){
         //Ne marche pas ( avec parse , mySQL ne lis pas les dates ,0 resultats )
         String debutAnne = /*Year.now().getValue()+*/"2021-01-01" ;
